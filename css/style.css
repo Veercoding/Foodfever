@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fff8f0;
+  color: #333;
+}
+header {
+  background: #d62828;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+main {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+section {
+  flex: 3;
+  min-width: 300px;
+}
+aside {
+  flex: 1;
+  min-width: 250px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  height: fit-content;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+button {
+  background: #d62828;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background: #a61e1e;
+}
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+select {
+  width: 100%;
+  padding: 6px;
+  margin: 8px 0;
+}
