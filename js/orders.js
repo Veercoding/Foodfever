@@ -6,7 +6,7 @@
   const STATUSES = ["Pending", "Preparing", "Ready"];
 
   const historyElement = document.getElementById("order-history");
-  const messageElement = document.getElementById("orders-message");
+  const messageElement = document.getElementById("message");
 
   // Validate and clean order items.
   function normaliseItems(items) {
