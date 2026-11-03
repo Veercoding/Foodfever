@@ -34,16 +34,16 @@
       location
     };
 
+    // Prototype only: no confirmed order has been created.
+    messageElement.textContent =
+      "Checkout details prepared. Ordering integration pending.";
+
     // Handoff event for JJ's ordering implementation.
     window.dispatchEvent(
       new CustomEvent("foodfever:checkout", {
         detail: checkoutData
       })
     );
-
-    // Prototype only: no confirmed order has been created.
-    messageElement.textContent =
-      "Checkout details prepared. Ordering integration pending.";
 
     console.log("FoodFever checkout prepared:", checkoutData);
   });
