@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodFever</title>
-  <link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/cart.css">
+
+
 </head>
 <body>
   <header>
@@ -13,10 +18,30 @@
   </header>
 
   <main>
-    <section>
-      <h2>Menu</h2>
-      <div id="menu" class="menu-grid"></div>
-    </section>
+<section>
+  <h2>Menu</h2>
+
+  <!-- David: Menu Search -->
+  <input
+    type="search"
+    id="menu-search"
+    class="menu-search"
+    placeholder="Search for food or vendors..."
+    aria-label="Search food menu"
+  >
+
+  <!-- David: Food Categories -->
+  <div class="menu-filters">
+    <button type="button" data-category="All" class="active">All</button>
+    <button type="button" data-category="Meals">Meals</button>
+    <button type="button" data-category="Fast Food">Fast Food</button>
+    <button type="button" data-category="Snacks">Snacks</button>
+    <button type="button" data-category="Drinks">Drinks</button>
+  </div>
+
+  <!-- Food Items -->
+  <div id="menu" class="menu-grid"></div>
+</section>
 
     <aside>
       <h2>Your Cart</h2>
@@ -36,6 +61,8 @@
     </aside>
   </main>
 
-  <script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/checkout-handoff.js"></script>
 </body>
 </html>
