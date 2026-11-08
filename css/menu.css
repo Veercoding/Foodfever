@@ -1,0 +1,93 @@
+
+/* FoodFever - Menu Styling */
+/* Developer: David */
+
+/* Individual food cards */
+.food-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #f0e4dc;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Food names */
+.food-card h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #252525;
+}
+
+/* Vendor information */
+.food-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #666666;
+}
+
+/* Food prices */
+.food-card .food-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d62828;
+  margin-top: auto;
+}
+
+/* Add to cart button */
+.food-card button {
+  width: 100%;
+  padding: 11px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.food-card button:hover {
+  background: #a61e1e;
+}
+
+/* Category filter buttons */
+.menu-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.menu-filters button.active {
+  background: #222222;
+}
+
+/* Search field */
+.menu-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .food-card {
+    padding: 15px;
+  }
+
+  .menu-filters {
+    gap: 6px;
+  }
+
+  .menu-filters button {
+    font-size: 12px;
+  }
+}
