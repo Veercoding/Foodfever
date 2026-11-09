@@ -47,7 +47,7 @@ td .items { color: var(--muted); font-size: .88rem; }
 .s-pending { background: #fff1d6; color: #7a5200; }
 .s-preparing { background: #e1ecff; color: #1d4a99; }
 .s-out { background: #efe3ff; color: #5a2aa0; }
-.s-delivered { background: #dff3e4; color: #1f6b35; }
+.s-ready, .s-delivered { background: #dff3e4; color: #1f6b35; }
 .s-cancelled { background: #eee; color: #666; }
 
 .act { display: flex; gap: 6px; }
