@@ -8,7 +8,7 @@ This chapter is about how we managed the FoodFever project. I explain why our gr
 
 FoodFever is a web app where Strathmore students and staff can order food from the campus cafeteria and have it brought to their hostel, lecture hall or the library. Vendors get their own dashboard where they see the orders coming in. We used Scrum, an Agile framework, to build it.
 
-The main reason we picked Scrum is that we didn't know all the requirements at the start. The first prototype only had a menu and a cart. Things like login, profiles, order tracking, order history and the vendor dashboard only came up later as we kept discussing the idea. If we had used Waterfall, we would have had to write all of that down and design it before coding anything. Every new idea would have sent us back to the beginning. With Scrum we just added it to the backlog and picked it up in the next sprint.
+The main reason we picked Scrum is that we didn't know all the requirements at the start. The first prototype only had a menu and a cart. Things like login, profiles, order tracking, order history and the vendor dashboard only came up later as we kept discussing the idea. Even the parts we had planned kept changing once we saw each other's work. The order statuses ended up as Pending, Preparing and Ready, the sign-up form got separate student and vendor roles, and the look of the menu was redone more than once. If we had used Waterfall, we would have had to write all of that down and design it before coding anything. Every new idea would have sent us back to the beginning. With Scrum we just added it to the backlog and picked it up in the next sprint.
 
 The system also broke down nicely into modules: menu and cart, ordering and tracking, login and profiles, and the vendor dashboard. So we could give one module to each developer and everyone could work at the same time on their own Git branch. When a module was ready it was merged through a pull request.
 
@@ -20,10 +20,11 @@ Before settling on Scrum we also looked at a few other approaches:
 
 | Methodology | How it works | Why we didn't pick it |
 |---|---|---|
-| Waterfall | One phase after another (requirements, design, coding, testing), with no going back | Our requirements kept changing, and testing would only happen at the very end |
-| Kanban | Continuous flow of tasks on a board, no fixed sprints | Good for ongoing work, but we needed clear deadlines and checkpoints to match the course timeline |
-| Extreme Programming (XP) | Very short cycles with pair programming and test-driven development | Pair programming was hard to arrange around our different class timetables |
-| **Scrum** | Short fixed sprints, a prioritised backlog, clear roles and regular reviews | **Chosen.** It handles changing requirements, gives us checkpoints before the deadline and lets developers and documentors work side by side |
+| Waterfall | One phase after another (requirements, design, coding, testing), with no going back | Too rigid. A late change in requirements is expensive, and there is nothing to show until the very end |
+| Spiral | Repeated cycles with a big focus on risk analysis | Made for large, high-risk projects. The risk analysis in every cycle was too heavy for a web app this size |
+| Prototyping | Build quick versions of the interface and improve them with feedback | Useful for the screens, so we did use it inside our sprints, but it doesn't cover the whole life cycle on its own |
+| Kanban | Continuous flow of tasks on a board, no fixed sprints | No fixed delivery points, which we needed for the course deadline. We still used a Kanban-style board, but only to track tasks |
+| **Scrum** | Short fixed sprints, a prioritised backlog, clear roles and regular reviews | **Chosen.** It handles changing requirements, gives us something working at the end of every sprint and lets developers and documentors work side by side |
 
 Scrum is defined in the Scrum Guide (Schwaber and Sutherland, 2020) as a lightweight framework built on three pillars: transparency, inspection and adaptation. In our project, transparency came from the shared backlog and the evening updates on WhatsApp, inspection from testing each increment at the end of a sprint, and adaptation from the changes we agreed on in each retrospective.
 
@@ -87,8 +88,10 @@ We used MoSCoW for priority (Must, Should, Could) and story points to estimate t
 | PB-10 | As a vendor, I want a dashboard showing incoming orders so I can prepare them. | Must | 8 | 2 |
 | PB-11 | As a team, we want everything tested and the bugs fixed before the demo. | Must | 5 | 3 |
 | PB-12 | As a lecturer, I want a complete report and user guide to assess the project. | Must | 5 | 3 |
+| PB-15 | As a user, I want every page to have the same look and navigation so the site is easy to use. | Should | 3 | 3 |
+| PB-16 | As a user, I want a contact page so I can send questions to the team. | Could | 2 | 3 |
 | PB-13 | As a student, I want to pay with M-Pesa so I don't need cash. | Could | 8 | Future |
-| PB-14 | As a team, we want a backend and database so data isn't lost when the browser is cleared. | Could | 8 | Future |
+| PB-14 | As a team, we want the pages connected to a backend and database so students and vendors see the same orders. | Could | 8 | Future (prototype started in Sprint 3) |
 
 ## 3.6 Sprint Plans
 
@@ -99,7 +102,7 @@ We started the project on 25 October and finished on 10 November 2026.
 | 0 | 25 Oct – 1 Nov 2026 | Set up the repo and build a simple prototype | PB-01 |
 | 1 | 2 – 5 Nov 2026 | A student can browse the menu, fill a cart, check out and track the order | PB-02 to PB-06 |
 | 2 | 6 – 9 Nov 2026 | Add accounts, order history and the vendor dashboard, and join all the modules | PB-07 to PB-10 |
-| 3 | 10 Nov 2026 | Test, fix bugs and finish the report | PB-11, PB-12 |
+| 3 | 10 Nov 2026 | Shared design and contact page, testing, bug fixes and finishing the report | PB-11, PB-12, PB-15, PB-16 |
 
 In Sprint 0 we set up the repo, agreed to use plain HTML, CSS and JavaScript (no backend for now), made the `css`, `js` and `docs` folders and built a first version with just a menu and a cart.
 
@@ -107,32 +110,26 @@ Sprint 1 was for the main ordering flow. That meant the menu page, the cart (add
 
 In Sprint 2 we added login and sign-up with form validation, student and vendor profiles, order history and the vendor dashboard. This was also the first time all the separate modules were put together into one site, linked from `index.html`.
 
-Sprint 3 was just the last day. We used it to test everything, fix the problems we found, finish the diagrams and the user guide, and go through the full report together.
+Sprint 3 was just the last day. We used it to pull everything together under one shared design, add a contact page, test everything, fix the problems we found, finish the diagrams and the user guide, and go through the full report together.
 
 ## 3.7 Sprint Progress
 
 | Sprint | Points planned | Points done | Points left in project | Status |
 |---|---|---|---|---|
-| 0 | 2 | 2 | 50 | Done |
-| 1 | 21 | 21 | 29 | Done |
-| 2 | 19 | 19 | 10 | Done |
-| 3 | 10 | 10 | 0 | Done (10 Nov) |
+| 0 | 2 | 2 | 55 | Done |
+| 1 | 21 | 21 | 34 | Done |
+| 2 | 19 | 19 | 15 | Done |
+| 3 | 15 | 15 | 0 | Done (10 Nov) |
 
-By the end of Sprint 2 we had done 42 out of 52 points, which is about 81%. The remaining 10 points (testing and the report) were done in Sprint 3. Our velocity was about 20 points per sprint in the two main development sprints.
+By the end of Sprint 2 we had done 42 out of 57 points, which is about 74%. The remaining 15 points (shared design, contact page, testing and the report) were done in Sprint 3. Our velocity was about 20 points per sprint in the two main development sprints.
 
 ```mermaid
 xychart-beta
     title "FoodFever burndown (story points left)"
     x-axis ["Start", "Sprint 0", "Sprint 1", "Sprint 2", "Sprint 3"]
-    y-axis "Points left" 0 --> 55
-    line [52, 50, 29, 10, 0]
+    y-axis "Points left" 0 --> 60
+    line [57, 55, 34, 15, 0]
 ```
-
-*Figure 3.1: Burndown chart for the project*
-
-*Figure 3.2: GitHub commit history showing work across the sprints* [insert screenshot of the repo's commits/network graph]
-
-*Figure 3.3: Example of an evening check-in in our WhatsApp group* [insert screenshot]
 
 ### Sprint 0 (25 Oct – 1 Nov)
 
@@ -148,11 +145,11 @@ On 7 November Justin connected David's menu and cart to his ordering and trackin
 
 ### Sprint 3 (10 Nov)
 
-On the final day we tested all the modules together, fixed the small issues we found and finished the report. Aaron did the introduction, Sahra the requirements, I did this chapter, Mathew the design diagrams and Allan the testing and user guide. After that we read through the whole report together before submitting.
+On the final day Harshvir added a shared stylesheet (`theme.css`) and a shared script (`shell.js`) so every page has the same navigation bar, footer and look, plus a contact page. The Dashboard link now only shows up when a vendor is logged in. He also built a backend prototype with Node.js, Express and SQLite that covers accounts, the menu, orders and contact messages, and tested it with Postman. We then tested all the modules together, fixed the small issues we found and finished the report. Aaron did the introduction, Sahra the requirements, I did this chapter, Mathew the design diagrams and Allan the testing and user guide. After that we read through the whole report together before submitting.
 
 ## 3.8 Tools
 
-We used GitHub for version control. Our repo has a `main` branch, a `develop` branch and a `feature/` branch for each module, and every change went in through a pull request. We wrote the code in VS Code and tested it with the Live Server extension. For communication we used our WhatsApp group for everything: the evening check-ins, sending screenshots of bugs and reminding each other about deadlines. We also shared our report chapters there for feedback before saving them in the `docs/report` folder in the repo.
+We used GitHub for version control. Our repo has a `main` branch for the stable version, a `develop` branch for integration and a `feature/` branch for each module, and every change went in through a pull request. We kept the backlog on the GitHub Issues board, which worked like a simple Kanban board with to do, in progress and done. We wrote the code in VS Code and tested it with the Live Server extension, and the backend prototype was tested with Postman. For the design chapter we used draw.io and StarUML for the UML diagrams and dbdiagram.io for the ERD. For communication we used our WhatsApp group for everything: the evening check-ins, sending screenshots of bugs and reminding each other about deadlines. We also shared our report chapters there for feedback before saving them in the `docs/report` folder in the repo.
 
 ## 3.9 Risk Management
 
@@ -174,11 +171,11 @@ Putting together modules that were built separately gave us a few small problems
 
 We also had a habit of leaving merges until the end of the sprint. Merging smaller changes more often and mentioning delays during the evening check-ins would have made things easier.
 
-There is also no backend yet, so all the data is saved in the browser. That was fine for this stage, but FoodFever would need a real database and M-Pesa payments before people could actually use it. Both are in the backlog as future work.
+The working demo still saves its data in the browser, so a student's phone and a vendor's screen can't see the same orders yet. The backend prototype fixes this, but it still has to be connected to the pages. Before people could actually use FoodFever we would also need M-Pesa payments, and for many users at once we would move from SQLite to MySQL or PostgreSQL. These are in the backlog as future work.
 
 ## 3.11 Conclusion
 
-Using Scrum worked well for us. We had a basic ordering system running early and kept adding to it (accounts, order history, the vendor side) without needing to plan everything from the start. Giving each developer their own module and branch meant four people could work at the same time without getting in each other's way, and the evening check-ins on WhatsApp meant problems came up early instead of on the last day. From 25 October to 10 November we managed to finish everything in the backlog that we planned for this version, and online payment and a real database are what we would add next.
+Using Scrum worked well for us. We had a basic ordering system running early and kept adding to it (accounts, order history, the vendor side) without needing to plan everything from the start. Giving each developer their own module and branch meant four people could work at the same time without getting in each other's way, and the evening check-ins on WhatsApp meant problems came up early instead of on the last day. From 25 October to 10 November we managed to finish everything in the backlog that we planned for this version, and the next steps would be connecting the backend prototype to the pages and adding M-Pesa payment.
 
 ## References
 
