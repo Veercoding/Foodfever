@@ -4,19 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodFever Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <script src="js/shell.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="index.html">FoodFever</a>
-    <nav>
-      <a href="index.html">Menu</a>
-      <a href="dashboard.html" aria-current="page">Dashboard</a>
-    </nav>
-  </header>
-
   <main>
     <h1>Today's orders</h1>
     <p id="notice" class="notice" hidden></p>
@@ -24,7 +16,7 @@
     <section class="figures" aria-label="Summary">
       <div><span id="f-count">0</span><small>Orders</small></div>
       <div><span id="f-open">0</span><small>In progress</small></div>
-      <div><span id="f-done">0</span><small>Delivered</small></div>
+      <div><span id="f-done">0</span><small>Ready</small></div>
       <div><span id="f-revenue">KES 0</span><small>Revenue</small></div>
     </section>
 
