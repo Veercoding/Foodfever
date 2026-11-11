@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/cart.css">
   <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/mpesa.css">
   <script src="js/shell.js"></script>
 </head>
 <body>
@@ -69,6 +70,57 @@
     </aside>
   </main>
 
+<dialog id="mpesa-dialog" aria-labelledby="mpesa-title">
+  <h2 id="mpesa-title">Pay with M-Pesa</h2>
+
+  <button type="button" id="mpesa-close" aria-label="Close payment">
+    Close
+  </button>
+
+  <section id="mpesa-phone-step">
+    <p>Enter a phone number for the simulated STK Push.</p>
+
+    <form id="mpesa-phone-form">
+      <label for="mpesa-phone">Phone number</label>
+      <input
+        id="mpesa-phone"
+        name="phone"
+        type="tel"
+        inputmode="tel"
+        placeholder="2547XXXXXXXX"
+        pattern="2547[0-9]{8}"
+        title="Enter a number in the format 2547XXXXXXXX"
+        required
+      >
+
+      <p>Amount: KES <strong id="mpesa-total">0</strong></p>
+      <button type="submit">Request payment</button>
+    </form>
+  </section>
+
+  <section id="mpesa-wait-step" hidden aria-live="polite">
+    <h3>STK Push requested</h3>
+    <p>Simulating the payment prompt…</p>
+  </section>
+
+  <section id="mpesa-pin-step" hidden>
+    <h3>Simulated payment confirmation</h3>
+    <p>This is a demo. Never enter your real M-Pesa PIN.</p>
+
+    <label for="mpesa-outcome">Choose a demo outcome</label>
+    <select id="mpesa-outcome">
+      <option value="success">Payment successful</option>
+      <option value="insufficient-funds">Insufficient funds</option>
+      <option value="invalid-pin">Invalid PIN</option>
+      <option value="timeout">Request timed out</option>
+    </select>
+    
+    <button type="button" id="mpesa-confirm">Simulate outcome</button>
+  </section>
+
+  <p id="mpesa-message" role="status" aria-live="polite"></p>
+</dialog>
+
   <div class="vendor-band">
     <div>
       <h2>Run a stall on campus?</h2>
@@ -81,6 +133,7 @@
   <script src="js/cart.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/checkout-handoff.js"></script>
-  <script src="js/home.js"></script>
+  <script src="js/mpesa.js"></script>
+  <script src="js/Home.js"></script>
 </body>
 </html>
