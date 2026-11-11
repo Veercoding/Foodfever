@@ -1,25 +1,55 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FoodFever</title>
+  <title>FoodFever - Campus food delivery</title>
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/cart.css">
   <link rel="stylesheet" href="css/orders.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/theme.css">
+
+  <script src="js/shell.js"></script>
 </head>
 <body>
   <header>
     <h1>FoodFever 🍔🔥</h1>
     <p>Hot food, fast, anywhere on campus.</p>
+    <div id="auth-nav" class="auth-nav"></div>
   </header>
+
+  <div class="steps" aria-label="How it works">
+    <div class="step">
+      <span>1</span>
+      <div>
+        <strong>Pick your food</strong>
+        <p>Every campus cafeteria in one menu.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span>2</span>
+      <div>
+        <strong>Choose where to eat</strong>
+        <p>Student Centre, hostels, lecture halls or the library.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span>3</span>
+      <div>
+        <strong>Follow your order</strong>
+        <p>See it move from Pending to Preparing to Ready.</p>
+      </div>
+    </div>
+  </div>
 
   <main>
     <section>
-      <h2>Menu</h2>
+      <h2>What are you craving?</h2>
 
       <input
         type="search"
@@ -40,11 +70,12 @@
       <div id="menu" class="menu-grid"></div>
     </section>
 
-    <aside>
+    <aside id="cart">
       <h2>Your Cart</h2>
+
       <ul id="cart-items"></ul>
 
-      <p>
+      <p class="cart-total">
         <strong>Total: KES <span id="total">0</span></strong>
       </p>
 
@@ -58,20 +89,25 @@
       </select>
 
       <button type="button" id="order-btn">Place Order</button>
+
       <p id="message" aria-live="polite"></p>
     </aside>
-
-    <!-- JJ: Order History and Tracking -->
-    <section class="orders-section">
-      <h2>My Orders</h2>
-      <p>View your previous orders and track their progress.</p>
-      <div id="order-history"></div>
-    </section>
   </main>
 
+  <div class="vendor-band">
+    <div>
+      <h2>Run a stall on campus?</h2>
+      <p>Join as a vendor and manage incoming orders from your own dashboard.</p>
+    </div>
+
+    <a class="ff-cta" href="login.html">Become a vendor</a>
+  </div>
+
+  <script src="js/auth.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/orders.js"></script>
   <script src="js/checkout-handoff.js"></script>
+  <script src="js/Home.js"></script>
 </body>
 </html>

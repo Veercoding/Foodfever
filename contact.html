@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact us - FoodFever</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <script src="js/shell.js"></script>
+</head>
+<body>
+  <header>
+    <h1>FoodFever</h1>
+    <p>Need a hand? Talk to us.</p>
+  </header>
+
+  <main class="contact">
+    <section class="panel-card">
+      <h2>Send us a message</h2>
+      <p>We reply by email, usually within one working day.</p>
+      <form id="contact-form" novalidate>
+        <div class="row">
+          <div><label for="c-name">Your name</label><input id="c-name" name="name" autocomplete="name" required></div>
+          <div><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <label for="c-topic">What is it about?</label>
+        <select id="c-topic" name="topic">
+          <option>A problem with my order</option>
+          <option>Payment or M-Pesa</option>
+          <option>Becoming a vendor</option>
+          <option>Feedback or an idea</option>
+          <option>Something else</option>
+        </select>
+        <label for="c-order">Order number (if you have one)</label>
+        <input id="c-order" name="order" placeholder="e.g. FF-1001">
+        <label for="c-msg">Message</label>
+        <textarea id="c-msg" name="message" required></textarea>
+        <button class="send-btn" type="submit">Send message</button>
+        <div id="form-msg" class="form-msg" role="status" hidden></div>
+      </form>
+    </section>
+
+    <div class="side">
+      <section class="panel-card">
+        <h2>Find us</h2>
+        <ul class="facts">
+          <li><strong>Email</strong><span>support@foodfever.example</span></li>
+          <li><strong>Support hours</strong><span>Monday to Friday, 8am to 6pm</span></li>
+          <li><strong>Campus</strong><span>Strathmore University, Ole Sangale Road, Madaraka Estate, Nairobi</span></li>
+        </ul>
+      </section>
+
+      <section class="panel-card faq">
+        <h2>Quick answers</h2>
+        <details><summary>Where can I get my food delivered?</summary><p>To the Student Centre, Hostels, Lecture Halls or the Library. Pick one in your cart before you place the order.</p></details>
+        <details><summary>How do I follow my order?</summary><p>Open My orders in the menu bar. The status moves from Pending to Preparing to Ready.</p></details>
+        <details><summary>How do I sell on FoodFever?</summary><p>Sign up and choose Vendor. You will get a dashboard to manage incoming orders.</p></details>
+        <details><summary>I made a mistake in my order</summary><p>Send us a message with your order number as soon as you can, and we will pass it to the vendor.</p></details>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/contact.js"></script>
+</body>
+</html>
