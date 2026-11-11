@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My profile - FoodFever</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+    <header>
+        <h1><a href="index.html">FoodFever 🍔🔥</a></h1>
+        <p>Hot food, fast, anywhere on campus.</p>
+        <div id="auth-nav" class="auth-nav"></div>
+    </header>
+
+    <main class="auth-main">
+        <div class="auth-card">
+            <h2>My profile <span id="role-badge" class="badge"></span></h2>
+            <p id="profile-message" class="auth-message" role="alert"></p>
+
+            <form id="profile-form" class="auth-form" novalidate>
+                <label for="profile-email">Email</label>
+                <input type="email" id="profile-email" disabled>
+
+                <label for="profile-name">Full name</label>
+                <input type="text" id="profile-name" autocomplete="name" required>
+
+                <label for="profile-phone">Phone number (for M-Pesa)</label>
+                <input type="tel" id="profile-phone" autocomplete="tel" required>
+
+                <div id="profile-stall-field" hidden>
+                    <label for="profile-stall">Stall or cafeteria name</label>
+                    <input type="text" id="profile-stall">
+                </div>
+
+                <button type="submit" class="auth-submit">Save changes</button>
+            </form>
+
+            <h2 class="section-gap">Change password</h2>
+            <p id="password-message" class="auth-message" role="alert"></p>
+
+            <form id="password-form" class="auth-form" novalidate>
+                <label for="current-password">Current password</label>
+                <input type="password" id="current-password" autocomplete="current-password" required>
+
+                <label for="new-password">New password</label>
+                <input type="password" id="new-password" autocomplete="new-password" required>
+
+                <button type="submit" class="auth-submit">Update password</button>
+            </form>
+
+            <button type="button" id="logout-btn" class="auth-secondary">Log out</button>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/auth-pages.js"></script>
+</body>
+
+</html>
