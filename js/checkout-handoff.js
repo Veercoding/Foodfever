@@ -47,4 +47,22 @@
 
     console.log("FoodFever checkout prepared:", checkoutData);
   });
+
+  window.addEventListener("foodfever:payment-success", event => {
+  const transaction = event.detail;
+
+  if (
+    !transaction ||
+    transaction.status !== "paid" ||
+    typeof transaction.transactionCode !== "string"
+  ) {
+    console.error("Payment success event has invalid transaction data.");
+    return;
+  }
+
+  messageElement.textContent =
+    `Paid / Sent to Kitchen. Receipt: ${transaction.transactionCode}`;
+
+  window.FoodFeverCart.clearCart();
+});
 })();
