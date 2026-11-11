@@ -53,7 +53,7 @@
 
     var links = document.createElement("div");
     links.className = "ff-links";
-    [["Menu", "index.html"], ["My orders", "index.html#order-history"], ["Dashboard", "dashboard.html"], ["Contact", "contact.html"]].forEach(function (l) {
+    [["Menu", "index.html"], ["My orders", "orders.html"], ["Dashboard", "dashboard.html"], ["Contact", "contact.html"]].forEach(function (l) {
       var a = document.createElement("a");
       a.href = l[1];
       a.textContent = l[0];
