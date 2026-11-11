@@ -36,7 +36,7 @@
 
     // Prototype only: no confirmed order has been created.
     messageElement.textContent =
-      "Checkout details prepared. Ordering integration pending.";
+      "Complete your M-Pesa payment to place the order.";
 
     // Handoff event for JJ's ordering implementation.
     window.dispatchEvent(

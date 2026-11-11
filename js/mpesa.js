@@ -102,8 +102,8 @@
     transactionCode,
     timestamp: new Date().toISOString(),
     phone: phoneInput.value,
-    status: "paid",
-    ...pendingCheckout
+    ...pendingCheckout,
+    status: "paid"
     };
 
     try {

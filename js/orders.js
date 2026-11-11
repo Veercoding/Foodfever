@@ -79,7 +79,8 @@
       total: calculateOrderTotal(items),
       currency: "KES",
       location: order.location.trim(),
-      status: order.status
+      status: order.status,
+      payment: order.payment && typeof order.payment === "object" ? order.payment : null
     };
   }
 
@@ -336,7 +337,13 @@
       total: calculateOrderTotal(items),
       currency: "KES",
       location: checkoutData.location.trim(),
-      status: "Pending"
+      status: "Pending",
+      payment: {
+        method: "M-Pesa",
+        receipt: String(checkoutData.transactionCode || ""),
+        phone: String(checkoutData.phone || ""),
+        paidAt: checkoutData.timestamp || null
+      }
     };
 
     // Save the order before clearing the cart.
@@ -383,7 +390,7 @@
 
   // Listen for David's checkout event.
   window.addEventListener(
-    "foodfever:checkout",
+    "foodfever:payment-success",
     handleCheckout
   );
 
