@@ -8,29 +8,68 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="css/orders.css">
   <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="css/mpesa.css">
+  <link rel="stylesheet" href="css/delivery.css">
+  <link rel="stylesheet" href="css/MenuReveal.css">
   <script src="js/shell.js"></script>
 </head>
 <body>
+
+  <!-- NAVIGATION BAR: edit the links here -->
+  <nav class="ff-nav" aria-label="Main">
+    <a class="ff-brand" href="index.html">🍔 <span>Food<b>Fever</b></span></a>
+
+    <button class="ff-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+
+    <div class="ff-links">
+      <a href="index.html">Menu</a>
+      <a href="orders.html">My orders</a>
+      <a href="dashboard.html" data-vendor-only hidden>Dashboard</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- login / logout area, filled in by auth.js -->
+    <div id="auth-nav" class="auth-nav"></div>
+  </nav>
+
   <header>
     <h1>FoodFever 🍔🔥</h1>
     <p>Hot food, fast, anywhere on campus.</p>
-    <div id="auth-nav" class="auth-nav"></div>
   </header>
 
   <div class="steps" aria-label="How it works">
-    <div class="step"><span>1</span><div><strong>Pick your food</strong><p>Every campus cafeteria in one menu.</p></div></div>
-    <div class="step"><span>2</span><div><strong>Choose where to eat</strong><p>Student Centre, hostels, lecture halls or the library.</p></div></div>
-    <div class="step"><span>3</span><div><strong>Follow your order</strong><p>See it move from Pending to Preparing to Ready.</p></div></div>
+    <div class="step">
+      <span>1</span>
+      <div>
+        <strong>Pick your food</strong>
+        <p>Every campus cafeteria in one menu.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span>2</span>
+      <div>
+        <strong>Choose where to eat</strong>
+        <p>Student Centre, hostels, lecture halls or the library.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span>3</span>
+      <div>
+        <strong>Follow your order</strong>
+        <p>See it move from Pending to Preparing to Ready.</p>
+      </div>
+    </div>
   </div>
 
   <main>
     <section>
       <h2>What are you craving?</h2>
 
-      <!-- David: Menu Search -->
       <input
         type="search"
         id="menu-search"
@@ -39,7 +78,6 @@
         aria-label="Search food menu"
       >
 
-      <!-- David: Food Categories -->
       <div class="menu-filters">
         <button type="button" data-category="All" class="active">All</button>
         <button type="button" data-category="Meals">Meals</button>
@@ -48,16 +86,20 @@
         <button type="button" data-category="Drinks">Drinks</button>
       </div>
 
-      <!-- Food Items -->
       <div id="menu" class="menu-grid"></div>
     </section>
 
     <aside id="cart">
       <h2>Your Cart</h2>
+
       <ul id="cart-items"></ul>
-      <p class="cart-total"><strong>Total: KES <span id="total">0</span></strong></p>
+
+      <p class="cart-total">
+        <strong>Total: KES <span id="total">0</span></strong>
+      </p>
 
       <label for="location">Deliver to:</label>
+
       <select id="location">
         <option>Student Centre</option>
         <option>Hostels</option>
@@ -65,8 +107,27 @@
         <option>Library</option>
       </select>
 
-      <button id="order-btn">Place Order</button>
-      <p id="message"></p>
+      <fieldset class="pay-options">
+        <legend>Payment</legend>
+
+        <label class="pay-option">
+          <input type="radio" name="payment-method" value="mpesa" checked>
+          <span><strong>Pay now</strong><small>M-Pesa, before we cook</small></span>
+        </label>
+
+        <label class="pay-option">
+          <input type="radio" name="payment-method" value="delivery">
+          <span><strong>Pay on delivery</strong><small>Pay by M-Pesa when it arrives</small></span>
+        </label>
+      </fieldset>
+
+      <label for="customer-email">Email for delivery updates:</label>
+      <input type="email" id="customer-email" placeholder="you@strathmore.edu" autocomplete="email">
+      <p id="pay-hint" class="pay-hint"></p>
+
+      <button type="button" id="order-btn">Place Order</button>
+
+      <p id="message" aria-live="polite"></p>
     </aside>
   </main>
 
@@ -126,14 +187,19 @@
       <h2>Run a stall on campus?</h2>
       <p>Join as a vendor and manage incoming orders from your own dashboard.</p>
     </div>
+
     <a class="ff-cta" href="login.html">Become a vendor</a>
   </div>
 
   <script src="js/auth.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/menu.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/delivery.js"></script>
   <script src="js/checkout-handoff.js"></script>
   <script src="js/mpesa.js"></script>
   <script src="js/Home.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/MenuReveal.js"></script>
 </body>
 </html>

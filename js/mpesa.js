@@ -19,8 +19,8 @@
     !waitStep ||
     !pinStep ||
     !closeButton ||
-    !messageElement || 
-    !outcomeSelect || 
+    !messageElement ||
+    !outcomeSelect ||
     !confirmButton ||
     !phoneInput
   ) {
@@ -70,71 +70,71 @@
 
   confirmButton.addEventListener("click", () => {
     const outcomes = {
-    success: "Simulated payment successful.",
-    "insufficient-funds": "Payment failed: insufficient funds.",
-    "invalid-pin": "Payment failed: invalid PIN.",
-    timeout: "Payment failed: the request timed out."
+      success: "Simulated payment successful.",
+      "insufficient-funds": "Payment failed: insufficient funds.",
+      "invalid-pin": "Payment failed: invalid PIN.",
+      timeout: "Payment failed: the request timed out."
     };
 
     const outcome = outcomeSelect.value;
 
-         if (!Object.hasOwn(outcomes, outcome)) {
-    messageElement.textContent = "Choose a valid demo outcome.";
-    return;
-        }
+    if (!Object.hasOwn(outcomes, outcome)) {
+      messageElement.textContent = "Choose a valid demo outcome.";
+      return;
+    }
 
-        if (outcome !== "success") {
-    messageElement.textContent = outcomes[outcome];
-    return;
-        }
+    if (outcome !== "success") {
+      messageElement.textContent = outcomes[outcome];
+      return;
+    }
 
-        if (!pendingCheckout) {
-    messageElement.textContent = "No checkout is available to pay.";
-    return;
-        }
+    if (!pendingCheckout) {
+      messageElement.textContent = "No checkout is available to pay.";
+      return;
+    }
 
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const transactionCode = Array.from({ length: 10 }, () =>
-    characters[Math.floor(Math.random() * characters.length)]
+      characters[Math.floor(Math.random() * characters.length)]
     ).join("");
 
     const transaction = {
-    transactionCode,
-    timestamp: new Date().toISOString(),
-    phone: phoneInput.value,
-    status: "paid",
-    ...pendingCheckout
+      transactionCode,
+      timestamp: new Date().toISOString(),
+      phone: phoneInput.value,
+      ...pendingCheckout,
+      status: "paid"
     };
 
     try {
-        const saved = JSON.parse(
-      localStorage.getItem(TRANSACTIONS_KEY) || "[]"
-    );
+      const saved = JSON.parse(
+        localStorage.getItem(TRANSACTIONS_KEY) || "[]"
+      );
 
-        if (!Array.isArray(saved)) {
-      throw new Error("Saved transactions are not in the expected format.");
-        }
+      if (!Array.isArray(saved)) {
+        throw new Error("Saved transactions are not in the expected format.");
+      }
 
-        saved.push(transaction);
-        localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(saved));
+      saved.push(transaction);
+      localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(saved));
     } catch (error) {
-        console.error("Could not save simulated transaction:", error);
-        messageElement.textContent =
+      console.error("Could not save simulated transaction:", error);
+      messageElement.textContent =
         "Payment was simulated, but the receipt could not be saved.";
-        return;
+      return;
     }
 
     confirmButton.disabled = true;
 
     messageElement.textContent =
-    `Simulated payment successful. Receipt: ${transactionCode}`;
+      `Simulated payment successful. Receipt: ${transactionCode}`;
 
     window.dispatchEvent(
-        new CustomEvent("foodfever:payment-success", {
-      detail: transaction
-        })
+      new CustomEvent("foodfever:payment-success", {
+        detail: transaction
+      })
     );
-    });
+  });
 
   closeButton.addEventListener("click", () => {
     dialog.close();

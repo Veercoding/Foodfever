@@ -1,0 +1,328 @@
+/* FoodFever - Ordering and Tracking Styling */
+/* Developer: JJ (restyled v2: single-column order list, tracker first) */
+
+.orders-section {
+  --o-red: #d62828;
+  --o-red-dark: #b81f1f;
+  --o-ink: #1f1a17;
+  --o-muted: #6b625c;
+  --o-line: #ece2da;
+  --o-card: #ffffff;
+  --o-panel: #faf6f2;
+  --o-green: #1f8a4c;
+
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 860px;
+  min-height: 55vh;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+  box-sizing: border-box;
+}
+
+.orders-section h2 {
+  color: var(--o-ink);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.orders-section > p:not(#message) {
+  color: var(--o-muted);
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 32px;
+}
+
+/* One order per row: easier to scan than a grid of small cards */
+#order-history {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- Order card ---------- */
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--o-card);
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid var(--o-line);
+  box-shadow: 0 1px 2px rgba(31, 26, 23, 0.04), 0 6px 20px rgba(31, 26, 23, 0.05);
+}
+
+.order-card > * {
+  margin: 0;
+}
+
+/* Reading order inside the card, whatever order orders.js builds it in */
+.order-card-header   { order: 1; }
+.order-live          { order: 2; }
+.order-details       { order: 3; }
+.order-payment       { order: 4; }
+.order-progress      { order: 5; }
+.order-ready-message { order: 6; }
+.order-items         { order: 7; }
+.order-total         { order: 8; }
+.order-status-button { order: 9; }
+
+.order-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--o-line);
+}
+
+.order-card-header h3 {
+  margin: 0;
+  min-width: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--o-ink);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Status pill ---------- */
+
+.order-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.order-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-pending   { background: #fff4d6; color: #8a5d00; }
+.status-preparing { background: #e3eeff; color: #1a4f94; }
+.status-ready     { background: #dcf5e4; color: #17632c; }
+
+/* ---------- Details ---------- */
+
+.order-details {
+  color: var(--o-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Tracker ---------- */
+
+.order-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  padding: 22px 12px 18px;
+  list-style: none;
+  background: var(--o-panel);
+  border-radius: 12px;
+}
+
+.order-progress li {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding: 32px 4px 0;
+  color: #9a918a;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* the dot */
+.order-progress li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #d9d0c8;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* the line joining this dot to the previous one */
+.order-progress li::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  width: 100%;
+  height: 3px;
+  background: #d9d0c8;
+}
+
+.order-progress li:first-child::after {
+  display: none;
+}
+
+.order-progress li.is-complete {
+  color: var(--o-green);
+}
+
+.order-progress li.is-complete::before {
+  background: var(--o-green);
+  border-color: var(--o-green);
+}
+
+.order-progress li.is-complete::after,
+.order-progress li.is-current::after {
+  background: var(--o-green);
+}
+
+.order-progress li.is-current {
+  color: var(--o-red);
+  font-weight: 800;
+}
+
+.order-progress li.is-current::before {
+  border-color: var(--o-red);
+  box-shadow: 0 0 0 5px rgba(214, 40, 40, 0.14);
+}
+
+/* When the last step is the current one, the order is finished: show it as done */
+.order-progress li.is-current:last-child {
+  color: var(--o-green);
+}
+
+.order-progress li.is-current:last-child::before {
+  background: var(--o-green);
+  border-color: var(--o-green);
+  box-shadow: 0 0 0 5px rgba(31, 138, 76, 0.16);
+}
+
+/* ---------- Items and total ---------- */
+
+.order-items {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--o-line);
+}
+
+.order-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--o-line);
+  font-size: 15px;
+  color: var(--o-ink);
+}
+
+.order-items li span:first-child {
+  overflow-wrap: anywhere;
+}
+
+.order-items li span:last-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.order-total {
+  display: block;
+  text-align: right;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--o-ink);
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Buttons and messages ---------- */
+
+.order-status-button {
+  width: 100%;
+  padding: 13px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background: var(--o-red);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.order-status-button:hover {
+  background: var(--o-red-dark);
+}
+
+.order-status-button:focus-visible {
+  outline: 3px solid rgba(214, 40, 40, 0.35);
+  outline-offset: 2px;
+}
+
+.order-ready-message {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #17632c;
+  background: #eaf8ee;
+  border: 1px solid #cfeedb;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.orders-empty {
+  color: var(--o-muted);
+  background: var(--o-card);
+  padding: 56px 20px;
+  border: 1px dashed #e2d6cc;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 15px;
+}
+
+#message {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--o-muted);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 600px) {
+  .orders-section {
+    padding: 28px 14px 48px;
+  }
+
+  .order-card {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .order-card-header {
+    flex-wrap: wrap;
+  }
+
+  .order-progress {
+    padding: 20px 4px 14px;
+  }
+
+  .order-progress li {
+    font-size: 11px;
+  }
+}

@@ -4,22 +4,49 @@ body {
   background: #fff8f0;
   color: #333;
 }
+
 header {
   background: #d62828;
   color: white;
   text-align: center;
   padding: 20px;
 }
+
+header nav {
+  margin-top: 15px;
+}
+
+header nav a {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+header nav a:hover {
+  background: white;
+  color: #d62828;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 main {
   display: flex;
   gap: 20px;
   padding: 20px;
   flex-wrap: wrap;
 }
+
 section {
   flex: 3;
   min-width: 300px;
 }
+
 aside {
   flex: 1;
   min-width: 250px;
@@ -28,17 +55,20 @@ aside {
   border-radius: 8px;
   height: fit-content;
 }
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 15px;
 }
+
 .card {
   background: white;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
+
 button {
   background: #d62828;
   color: white;
@@ -47,13 +77,16 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
 button:hover {
   background: #a61e1e;
 }
+
 ul {
   padding-left: 0;
   list-style: none;
 }
+
 select {
   width: 100%;
   padding: 6px;

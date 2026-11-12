@@ -1,0 +1,655 @@
+/* FoodFever - Pay on delivery, delivery animation, Delivered status, toasts */
+
+/* ============ Checkout: payment options (index.html cart) ============ */
+
+#cart .pay-options {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  border: none;
+}
+
+#cart .pay-options legend {
+  margin: 0 0 8px;
+  padding: 0;
+  font-weight: 700;
+}
+
+#cart .pay-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  border: 1.5px solid #e6ddd5;
+  border-radius: 12px;
+  background: #fff;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+#cart .pay-option:has(input:checked) {
+  border-color: #d62828;
+  background: #fff5f4;
+  box-shadow: 0 0 0 3px rgba(214, 40, 40, 0.1);
+}
+
+#cart .pay-option input {
+  width: auto;
+  margin-top: 3px;
+  accent-color: #d62828;
+}
+
+#cart .pay-option span {
+  display: flex;
+  flex-direction: column;
+}
+
+#cart .pay-option small {
+  color: #6b625c;
+  font-size: 12.5px;
+}
+
+#cart .pay-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #6b625c;
+}
+
+#cart #customer-email {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e6ddd5;
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+}
+
+/* ============ Orders page and dashboard: Delivered + payment ============ */
+
+.order-payment {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.order-payment.is-paid {
+  background: #eaf8ee;
+  color: #17632c;
+}
+
+.order-payment.is-unpaid {
+  background: #fff4d6;
+  color: #8a5d00;
+}
+
+.status-delivered {
+  background: #e8e7fb;
+  color: #34358a;
+}
+
+.badge.s-delivered {
+  background: #e8e7fb;
+  color: #34358a;
+}
+
+.pay-note.is-unpaid {
+  color: #8a5d00;
+  font-weight: 700;
+}
+
+/* ============ Toast (email sent, email not set up, ...) ============ */
+
+.ff-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 9999;
+  max-width: calc(100% - 32px);
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #1f1a17;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: ffd-toast 0.25s ease-out;
+}
+
+.ff-toast.is-ok { background: #1f8a4c; }
+.ff-toast.is-warn { background: #8a5d00; }
+.ff-toast.is-error { background: #b81f1f; }
+
+@keyframes ffd-toast {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ============ Delivery animation popup ============ */
+
+#ff-delivery {
+  box-sizing: border-box;
+  width: min(560px, calc(100% - 24px));
+  max-width: none;
+  padding: 0;
+  border: none;
+  border-radius: 22px;
+  background: #fff;
+  color: #1f1a17;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+#ff-delivery[open] {
+  animation: ffd-pop 0.25s ease-out;
+}
+
+#ff-delivery::backdrop {
+  background: rgba(20, 14, 10, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+#ff-delivery [hidden] {
+  display: none !important;
+}
+
+.ffd-wrap {
+  position: relative;
+}
+
+.ffd-stage {
+  position: relative;
+  height: 270px;
+  overflow: hidden;
+  background: #ffe3c9;
+}
+
+.ffd-scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+
+#ff-delivery[data-scene="cook"] .ffd-kitchen,
+#ff-delivery[data-scene="ride"] .ffd-ride,
+#ff-delivery[data-scene="done"] .ffd-ride {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Kitchen ---- */
+
+.ffd-kitchen {
+  background: linear-gradient(#ffe1c4 0 72%, #c98a5b 72% 100%);
+}
+
+.ffd-chef {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 300px;
+  transform: translateX(-50%);
+}
+
+.ffd-chefbody {
+  animation: ffd-chef 0.5s ease-in-out infinite alternate;
+}
+
+.ffd-panwrap {
+  transform-origin: 148px 122px;
+  animation: ffd-tilt 1s ease-in-out infinite;
+}
+
+.ffd-flip {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ffd-flip 1s ease-in-out infinite;
+}
+
+.ffd-flame {
+  transform-origin: 0 0;
+  animation: ffd-flicker 0.35s ease-in-out infinite alternate;
+}
+
+.ffd-flame.f2 { animation-delay: 0.1s; }
+.ffd-flame.f3 { animation-delay: 0.2s; }
+
+.ffd-puff {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ffd-puff 1.6s ease-out infinite;
+}
+
+.ffd-puff.p2 { animation-delay: 0.5s; }
+.ffd-puff.p3 { animation-delay: 1s; }
+
+/* ---- Ride ---- */
+
+.ffd-ride {
+  background: linear-gradient(#bfe6ff, #eaf7ff 70%);
+}
+
+.ffd-sun {
+  position: absolute;
+  top: 22px;
+  right: 40px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ffd23f;
+  box-shadow: 0 0 0 10px rgba(255, 210, 63, 0.3);
+}
+
+.ffd-cloud {
+  position: absolute;
+  top: 40px;
+  width: 78px;
+  height: 24px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0.9;
+  animation: ffd-cloud 16s linear infinite;
+}
+
+.ffd-cloud.c2 {
+  top: 86px;
+  width: 56px;
+  height: 18px;
+  animation-duration: 22s;
+  animation-delay: -8s;
+}
+
+.ffd-road {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: #3a3a3a;
+  border-top: 5px solid #bdbdbd;
+}
+
+.ffd-dash {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #fff 0 28px, transparent 28px 56px);
+  animation: ffd-dash 0.5s linear infinite;
+}
+
+.ffd-dest {
+  position: absolute;
+  right: 22px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ffd-destname {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: ffd-bob 0.9s ease-in-out infinite alternate;
+}
+
+.ffd-building {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.ffd-bike {
+  position: absolute;
+  bottom: 48px;
+  left: -160px;
+  width: 130px;
+}
+
+.ffd-bike svg {
+  display: block;
+  width: 100%;
+  animation: ffd-bob 0.35s ease-in-out infinite alternate;
+}
+
+#ff-delivery[data-scene="ride"] .ffd-bike {
+  animation: ffd-ride var(--ffd-ride, 4200ms) cubic-bezier(0.3, 0.6, 0.4, 1) forwards;
+}
+
+#ff-delivery[data-scene="done"] .ffd-bike {
+  left: calc(100% - 270px);
+}
+
+.ffd-wheel {
+  animation: ffd-spin 0.5s linear infinite;
+}
+
+.ffd-speed {
+  position: absolute;
+  left: -34px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(31, 26, 23, 0.25);
+  animation: ffd-speed 0.6s ease-out infinite;
+}
+
+.ffd-speed.s1 { top: 22px; width: 30px; }
+.ffd-speed.s2 { top: 38px; width: 22px; animation-delay: 0.2s; }
+.ffd-speed.s3 { top: 54px; width: 28px; animation-delay: 0.4s; }
+
+#ff-delivery[data-scene="done"] .ffd-speed {
+  opacity: 0;
+  animation: none;
+}
+
+#ff-delivery[data-scene="done"] .ffd-wheel,
+#ff-delivery[data-scene="done"] .ffd-dash,
+#ff-delivery[data-scene="done"] .ffd-bike svg,
+#ff-delivery[data-scene="done"] .ffd-cloud {
+  animation-play-state: paused;
+}
+
+/* ---- Skip button and progress bar ---- */
+
+.ffd-skip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  margin: 0;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(31, 26, 23, 0.55);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.ffd-skip:hover {
+  background: rgba(31, 26, 23, 0.75);
+}
+
+.ffd-bar {
+  height: 4px;
+  background: #f0e6de;
+}
+
+.ffd-bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #d62828;
+  animation: ffd-fill var(--ffd-total, 7400ms) linear forwards;
+}
+
+#ff-delivery[data-scene="done"] .ffd-bar i {
+  width: 100%;
+  background: #1f8a4c;
+  animation: none;
+}
+
+/* ---- Text and buttons ---- */
+
+.ffd-info {
+  padding: 20px 24px 24px;
+  text-align: center;
+}
+
+#ff-delivery h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #1f1a17;
+}
+
+#ff-delivery .ffd-sub {
+  margin: 0;
+  min-height: 1.5em;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #6b625c;
+}
+
+.ffd-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+#ff-delivery .ffd-btn {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 13px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+#ff-delivery .ffd-primary {
+  background: #d62828;
+  color: #fff;
+}
+
+#ff-delivery .ffd-primary:hover {
+  background: #b81f1f;
+}
+
+#ff-delivery .ffd-ghost {
+  background: #fff;
+  color: #1f1a17;
+  border-color: #d9d0c8;
+}
+
+#ff-delivery .ffd-ghost:hover {
+  border-color: #b8aea5;
+}
+
+/* ---- Keyframes ---- */
+
+@keyframes ffd-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ffd-chef {
+  from { transform: translateY(0); }
+  to { transform: translateY(-3px); }
+}
+
+@keyframes ffd-tilt {
+  0%, 100% { transform: rotate(0deg); }
+  45% { transform: rotate(-12deg); }
+}
+
+@keyframes ffd-flip {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  45% { transform: translateY(-38px) rotate(180deg); }
+  90% { transform: translateY(0) rotate(360deg); }
+}
+
+@keyframes ffd-flicker {
+  from { transform: scaleY(0.8); }
+  to { transform: scaleY(1.15); }
+}
+
+@keyframes ffd-puff {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(6px, -46px) scale(1.4); }
+}
+
+@keyframes ffd-cloud {
+  from { left: -90px; }
+  to { left: 100%; }
+}
+
+@keyframes ffd-dash {
+  to { background-position: -56px 0; }
+}
+
+@keyframes ffd-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-3px); }
+}
+
+@keyframes ffd-ride {
+  from { left: -160px; }
+  to { left: calc(100% - 270px); }
+}
+
+@keyframes ffd-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ffd-speed {
+  from { opacity: 0.9; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-24px); }
+}
+
+@keyframes ffd-fill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ---- Small screens and reduced motion ---- */
+
+@media (max-width: 480px) {
+  .ffd-stage { height: 230px; }
+  .ffd-chef { width: 250px; }
+  .ffd-building { font-size: 52px; }
+  .ffd-bike { width: 108px; }
+  #ff-delivery[data-scene="done"] .ffd-bike { left: calc(100% - 220px); }
+  @keyframes ffd-ride {
+    from { left: -140px; }
+    to { left: calc(100% - 220px); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ff-delivery *,
+  #ff-delivery[open] {
+    animation: none !important;
+  }
+}
+
+/* ============ Live scene on an order card (My orders page) ============ */
+
+.order-live-text {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b625c;
+}
+
+.ffd-live {
+  position: relative;
+  height: 190px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffe3c9;
+}
+
+/* the scenes are normally hidden until the popup picks one; here they always show */
+.ffd-live .ffd-scene {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ffd-live .ffd-chef { width: 210px; }
+
+.ffd-live .ffd-road { height: 38px; }
+.ffd-live .ffd-dash { top: 15px; }
+.ffd-live .ffd-dest { right: 18px; bottom: 42px; }
+.ffd-live .ffd-building { font-size: 46px; }
+.ffd-live .ffd-destname { font-size: 12px; }
+.ffd-live .ffd-sun { top: 14px; right: 24px; width: 38px; height: 38px; }
+.ffd-live .ffd-cloud { top: 24px; }
+.ffd-live .ffd-cloud.c2 { top: 58px; }
+
+/* the rider keeps riding to the location, then starts again */
+.ffd-live .ffd-bike {
+  bottom: 30px;
+  width: 96px;
+  animation: ffd-loop 5.5s ease-in-out infinite;
+}
+
+/* waiting for the kitchen */
+.ffd-live.is-wait {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(#fff3e8, #ffe3c9);
+}
+
+.ffd-wait {
+  text-align: center;
+}
+
+.ffd-ticket {
+  display: block;
+  font-size: 64px;
+  line-height: 1.1;
+  animation: ffd-pulse 1.2s ease-in-out infinite;
+}
+
+.ffd-dots {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.ffd-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d62828;
+  animation: ffd-blink 1s ease-in-out infinite;
+}
+
+.ffd-dots i:nth-child(2) { animation-delay: 0.2s; }
+.ffd-dots i:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes ffd-loop {
+  0% { left: -130px; opacity: 1; }
+  82% { left: calc(100% - 200px); opacity: 1; }
+  100% { left: calc(100% - 200px); opacity: 0; }
+}
+
+@keyframes ffd-pulse {
+  0%, 100% { transform: scale(1) rotate(-4deg); }
+  50% { transform: scale(1.12) rotate(4deg); }
+}
+
+@keyframes ffd-blink {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ffd-live * { animation: none !important; }
+  .ffd-live .ffd-bike { left: calc(100% - 200px); }
+  .ffd-live .ffd-dots i { opacity: 1; }
+}
