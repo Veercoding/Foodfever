@@ -1,5 +1,7 @@
 // FoodFever shell: navigation bar + burger loader, shared by every page.
 // Add to the <head> of each page:  <script src="js/shell.js"></script>
+// If a page already has <nav class="ff-nav"> in its HTML, that nav is used as it is.
+// Pages without one get a nav built here.
 (function () {
   var root = document.documentElement;
   root.classList.add("ff-loading");
@@ -33,7 +35,37 @@
 
   var dashLink = null;
 
+  // Used when the page already has its own <nav class="ff-nav"> in the HTML:
+  // just hook up the toggle, the current-page highlight and the vendor-only link.
+  function wireExistingNav(nav) {
+    var toggle = nav.querySelector(".ff-toggle");
+    if (toggle) {
+      toggle.onclick = function () {
+        var open = nav.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(open));
+      };
+    }
+
+    nav.querySelectorAll(".ff-links a").forEach(function (a) {
+      if (a.getAttribute("href") === page) a.setAttribute("aria-current", "page");
+    });
+
+    var auth = nav.querySelector("#auth-nav");
+    var dash = nav.querySelector("[data-vendor-only]");
+    if (auth && dash) {
+      var sync = function () {
+        dash.hidden = page !== "dashboard.html" && !/vendor|admin/i.test(auth.textContent || "");
+      };
+      sync();
+      new MutationObserver(sync).observe(auth, { childList: true, subtree: true, characterData: true });
+    }
+  }
+
   function buildNav() {
+    // If the page already has its own nav, use it instead of building another one
+    var existing = document.querySelector("nav.ff-nav");
+    if (existing) { wireExistingNav(existing); return; }
+
     var nav = document.createElement("nav");
     nav.className = "ff-nav";
     nav.setAttribute("aria-label", "Main");

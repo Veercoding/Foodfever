@@ -1,15 +1,23 @@
 // Reads and updates the orders saved by JJ's ordering module (js/orders.js).
 const ORDERS_KEY = "foodfever_orders";
-const FLOW = ["Pending", "Preparing", "Ready"];           // must match STATUSES in orders.js
-const NEXT_TEXT = { Pending: "Start preparing", Preparing: "Mark ready" };
+const FLOW = ["Pending", "Preparing", "Ready", "Delivered"];   // must match STATUSES in orders.js
+const NEXT_TEXT = { Pending: "Start preparing", Preparing: "Mark ready", Ready: "Mark delivered" };
+const PAY_ON_DELIVERY = "Pay on delivery";
 
 const DEMO = [
   { id: "FF-1001", createdAt: "2026-11-09T09:12:00", location: "Hostels", status: "Pending",
+    payment: { method: "M-Pesa", receipt: "SJK4M2P9QX" },
     items: [{ name: "Chips & Chicken", qty: 2, price: 350 }] },
   { id: "FF-1002", createdAt: "2026-11-09T09:40:00", location: "Library", status: "Preparing",
+    payment: { method: PAY_ON_DELIVERY, status: "Unpaid" },
+    customer: { name: "Demo Student", email: "student@example.com", phone: "" },
     items: [{ name: "Beef Burger", qty: 1, price: 400 }, { name: "Fresh Juice", qty: 1, price: 150 }] },
   { id: "FF-1003", createdAt: "2026-11-09T10:05:00", location: "Lecture Halls", status: "Ready",
-    items: [{ name: "Pilau", qty: 3, price: 250 }] }
+    payment: { method: "M-Pesa", receipt: "TLM8Q1R7ZD" },
+    items: [{ name: "Pilau", qty: 3, price: 250 }] },
+  { id: "FF-1004", createdAt: "2026-11-09T08:30:00", location: "Student Centre", status: "Delivered",
+    payment: { method: PAY_ON_DELIVERY, status: "Paid", paidAt: "2026-11-09T08:55:00" },
+    items: [{ name: "Samosa (2)", qty: 2, price: 100 }] }
 ];
 
 let orders = [];
@@ -23,6 +31,14 @@ function readStored() {
   } catch (e) { return []; }
 }
 
+function normaliseCustomer(c) {
+  if (!c || typeof c !== "object") return null;
+  const name = typeof c.name === "string" ? c.name.trim() : "";
+  const email = typeof c.email === "string" ? c.email.trim() : "";
+  const phone = typeof c.phone === "string" ? c.phone.trim() : "";
+  return name || email || phone ? { name, email, phone } : null;
+}
+
 function normalise(o) {
   const items = (Array.isArray(o.items) ? o.items : []).map(it => ({
     name: String(it.name || "Item"), qty: Number(it.qty || 1), price: Number(it.price || 0)
@@ -33,8 +49,26 @@ function normalise(o) {
     location: String(o.location || "Not given"),
     createdAt: o.createdAt || "",
     total: items.reduce((s, it) => s + it.price * it.qty, 0),
-    status: FLOW.includes(o.status) ? o.status : "Pending"
+    status: FLOW.includes(o.status) ? o.status : "Pending",
+    customer: normaliseCustomer(o.customer),
+    payment: o.payment && typeof o.payment === "object" ? o.payment : null
   };
+}
+
+// An order counts as paid once it has an M-Pesa receipt or was marked paid on delivery.
+function isPaid(o) {
+  return !!(o.payment && (o.payment.status === "Paid" || o.payment.receipt));
+}
+
+function isUnpaidDelivery(o) {
+  return !!(o.payment && o.payment.method === PAY_ON_DELIVERY && !isPaid(o));
+}
+
+function paymentText(o) {
+  const p = o.payment;
+  if (!p) return "No payment record";
+  if (p.method === PAY_ON_DELIVERY) return isPaid(o) ? "Paid on delivery" : "Pay on delivery · unpaid";
+  return p.receipt ? "Paid with M-Pesa · " + p.receipt : "No payment record";
 }
 
 function loadOrders() {
@@ -51,18 +85,49 @@ function loadOrders() {
   orders.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 }
 
+function notifyDelivered(order) {
+  if (!window.FoodFeverNotify) return;
+  if (usingDemo) {
+    FoodFeverNotify.toast("Sample order, so no email was sent.", "warn");
+    return;
+  }
+  FoodFeverNotify.orderDelivered(order);
+}
+
 function setStatus(id, status) {
   const o = orders.find(x => x.id === id);
-  if (o) o.status = status;
+  if (!o) return;
+
+  // Pay on delivery: the vendor collects the money before marking it delivered.
+  const needsCollect = status === "Delivered" && isUnpaidDelivery(o);
+  if (needsCollect) {
+    const ok = confirm(
+      "Collect KES " + o.total.toLocaleString() + " by M-Pesa from the student.\n\nHas the student paid?"
+    );
+    if (!ok) return;
+  }
+
+  const paidAt = new Date().toISOString();
+
+  o.status = status;
+  if (needsCollect) o.payment = { ...o.payment, status: "Paid", paidAt };
+
   if (!usingDemo) {
     // Update only this order in the shared list, so the customer's tracking page sees it
     // and every other order is left exactly as it was.
     const raw = readStored();
     const target = raw.find(x => x && x.id === id);
-    if (target) target.status = status;
+    if (target) {
+      target.status = status;
+      target.statusUpdatedAt = new Date().toISOString();
+      if (needsCollect) target.payment = { ...(target.payment || {}), status: "Paid", paidAt };
+    }
     try { localStorage.setItem(ORDERS_KEY, JSON.stringify(raw)); } catch (e) { alert("Could not save the change."); }
   }
+
   render();
+
+  if (status === "Delivered") notifyDelivered(o);
 }
 
 function el(tag, cls, text) {
@@ -90,9 +155,11 @@ function renderFilters() {
 
 function renderFigures() {
   document.getElementById("f-count").textContent = orders.length;
-  document.getElementById("f-open").textContent = orders.filter(o => o.status !== "Ready").length;
-  document.getElementById("f-done").textContent = orders.filter(o => o.status === "Ready").length;
-  document.getElementById("f-revenue").textContent = "KES " + orders.reduce((s, o) => s + o.total, 0).toLocaleString();
+  document.getElementById("f-open").textContent = orders.filter(o => o.status !== "Delivered").length;
+  document.getElementById("f-done").textContent = orders.filter(o => o.status === "Delivered").length;
+  // Revenue counts money actually received: M-Pesa receipts and cash collected on delivery.
+  document.getElementById("f-revenue").textContent =
+    "KES " + orders.filter(isPaid).reduce((s, o) => s + o.total, 0).toLocaleString();
 }
 
 function renderRows() {
@@ -113,11 +180,15 @@ function renderRows() {
     o.items.forEach(it => itemsTd.appendChild(el("div", "", it.qty + " × " + it.name)));
     tr.appendChild(itemsTd);
 
-    tr.appendChild(el("td", "", o.location));
+    const locTd = el("td", "", o.location);
+    if (o.customer && o.customer.email) locTd.appendChild(el("div", "items", o.customer.email));
+    tr.appendChild(locTd);
+
     tr.appendChild(el("td", "num", "KES " + o.total.toLocaleString()));
 
     const stTd = el("td");
     stTd.appendChild(el("span", "badge s-" + o.status.toLowerCase(), o.status));
+    stTd.appendChild(el("div", "items pay-note" + (isUnpaidDelivery(o) ? " is-unpaid" : ""), paymentText(o)));
     tr.appendChild(stTd);
 
     const actTd = el("td");

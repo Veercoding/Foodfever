@@ -1,0 +1,132 @@
+/* FoodFever - "Browse the menu" reveal animation */
+
+/* ---------- The red wipe screen ---------- */
+
+#ff-menu-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, #e53935, #c62020);
+  color: #fff;
+  text-align: center;
+  pointer-events: all;
+}
+
+#ff-menu-wipe .ffm-center {
+  padding: 0 20px;
+}
+
+#ff-menu-wipe .ffm-foods {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#ff-menu-wipe .ffm-foods span {
+  display: inline-block;
+  font-size: 56px;
+  line-height: 1;
+  opacity: 0;
+}
+
+/* the food drops in, then keeps tossing */
+#ff-menu-wipe.is-on .ffm-foods span {
+  opacity: 1;
+  animation:
+    ffm-drop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) backwards,
+    ffm-toss 0.9s ease-in-out infinite;
+  animation-delay:
+    calc(var(--d) * 80ms),
+    calc(450ms + var(--d) * 80ms);
+}
+
+#ff-menu-wipe .ffm-title {
+  margin: 18px 0 4px;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  opacity: 0;
+}
+
+#ff-menu-wipe .ffm-sub {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0;
+}
+
+#ff-menu-wipe.is-on .ffm-title {
+  opacity: 1;
+  animation: ffm-rise 0.5s ease-out 0.25s backwards;
+}
+
+#ff-menu-wipe.is-on .ffm-sub {
+  opacity: 0.9;
+  animation: ffm-rise 0.5s ease-out 0.4s backwards;
+}
+
+/* ---------- The menu popping in ---------- */
+
+.ffm-reveal > section > h2,
+.ffm-reveal > section > .menu-search,
+.ffm-reveal > section > .menu-filters {
+  animation: ffm-rise 0.5s ease-out backwards;
+}
+
+.ffm-reveal > section > .menu-search { animation-delay: 0.08s; }
+.ffm-reveal > section > .menu-filters { animation-delay: 0.16s; }
+
+/* "backwards" (not "forwards") so the cards' own hover effects still work afterwards */
+.ffm-reveal #menu > * {
+  animation: ffm-pop 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
+  animation-delay: calc(0.25s + var(--ffm-i, 0) * 70ms);
+}
+
+.ffm-reveal > aside {
+  animation: ffm-slide 0.6s ease-out 0.3s backwards;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes ffm-drop {
+  from { opacity: 0; transform: translateY(-70px) scale(0.5) rotate(-30deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ffm-toss {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(8deg); }
+}
+
+@keyframes ffm-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ffm-pop {
+  from { opacity: 0; transform: translateY(34px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ffm-slide {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Small screens and reduced motion ---------- */
+
+@media (max-width: 480px) {
+  #ff-menu-wipe .ffm-foods span { font-size: 40px; }
+  #ff-menu-wipe .ffm-foods { gap: 6px; }
+  #ff-menu-wipe .ffm-title { font-size: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ff-menu-wipe,
+  #ff-menu-wipe *,
+  .ffm-reveal *,
+  .ffm-reveal > * {
+    animation: none !important;
+  }
+}

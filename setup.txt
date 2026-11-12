@@ -1,0 +1,54 @@
+<!-- ============================================================
+     HTML CHANGES (4 small edits). Nothing else in your HTML changes.
+     ============================================================ -->
+
+
+<!-- ============ 1. index.html: <head> ============
+     Add this line after your other stylesheet links (after css/mpesa.css): -->
+<link rel="stylesheet" href="css/delivery.css">
+
+
+<!-- ============ 2. index.html: the cart ============
+     Inside <aside id="cart">, add this block between the </select> of #location
+     and the <button id="order-btn">Place Order</button> line: -->
+<fieldset class="pay-options">
+  <legend>Payment</legend>
+
+  <label class="pay-option">
+    <input type="radio" name="payment-method" value="mpesa" checked>
+    <span><strong>Pay now</strong><small>M-Pesa, before we cook</small></span>
+  </label>
+
+  <label class="pay-option">
+    <input type="radio" name="payment-method" value="delivery">
+    <span><strong>Pay on delivery</strong><small>Pay by M-Pesa when it arrives</small></span>
+  </label>
+</fieldset>
+
+<label for="customer-email">Email for delivery updates:</label>
+<input type="email" id="customer-email" placeholder="you@strathmore.edu" autocomplete="email">
+<p id="pay-hint" class="pay-hint"></p>
+
+
+<!-- ============ 3. index.html: scripts at the bottom ============
+     Add delivery.js right after orders.js (order of the others stays the same): -->
+<script src="js/auth.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/orders.js"></script>
+<script src="js/delivery.js"></script>          <!-- NEW -->
+<script src="js/checkout-handoff.js"></script>
+<script src="js/mpesa.js"></script>
+<script src="js/Home.js"></script>
+<script src="js/nav.js"></script>
+
+
+<!-- ============ 4. orders.html and dashboard.html ============
+     orders.html: add this to the <head> next to the other stylesheets: -->
+<link rel="stylesheet" href="css/delivery.css">
+
+<!-- dashboard.html: add the same stylesheet link in the <head>, and load notify.js
+     BEFORE your dashboard script at the bottom: -->
+<link rel="stylesheet" href="css/delivery.css">
+<script src="js/notify.js"></script>
+<!-- <script src="js/dashboard.js"></script>  (your existing dashboard script, now updated) -->
