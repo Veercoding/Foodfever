@@ -1,0 +1,155 @@
+/* FoodFever - Vendor menu management */
+
+/* Vendors don't order: no cart, no "become a vendor" banner */
+.is-vendor #cart {
+  display: none !important;
+}
+
+.is-vendor .vendor-band {
+  display: none;
+}
+
+/* ---------- Edit / Delete buttons on a menu card ---------- */
+
+.food-card .food-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.food-card .food-actions button {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.food-card .food-actions .food-edit {
+  background: #fff;
+  color: #1f1a17;
+  border: 1.5px solid #d9d0c8;
+}
+
+.food-card .food-actions .food-edit:hover {
+  border-color: #1f1a17;
+}
+
+.food-card .food-actions .food-delete {
+  background: #fff;
+  color: #c62828;
+  border: 1.5px solid #f1c6c6;
+}
+
+.food-card .food-actions .food-delete:hover {
+  background: #fdecec;
+  border-color: #c62828;
+}
+
+/* ---------- The "manage your menu" panel (takes the cart's place) ---------- */
+
+#vendor-panel {
+  align-self: start;
+  position: sticky;
+  top: 96px;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #f0e4dc;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(31, 26, 23, 0.08);
+}
+
+#vendor-panel [hidden] {
+  display: none !important;
+}
+
+#vendor-panel h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+#vendor-panel .vp-note {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b625c;
+}
+
+#vendor-panel label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#vendor-panel input,
+#vendor-panel select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e6ddd5;
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+}
+
+#vendor-panel input:focus-visible,
+#vendor-panel select:focus-visible {
+  outline: 3px solid rgba(214, 40, 40, 0.2);
+  border-color: #d62828;
+}
+
+#vendor-panel .vp-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+#vendor-panel button {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 13px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#vendor-panel #vp-save {
+  background: #d62828;
+  color: #fff;
+  border: 2px solid transparent;
+}
+
+#vendor-panel #vp-save:hover {
+  background: #b81f1f;
+}
+
+#vendor-panel #vp-cancel {
+  background: #fff;
+  color: #1f1a17;
+  border: 2px solid #d9d0c8;
+}
+
+#vendor-panel .vp-error {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: #b81f1f;
+}
+
+#vendor-panel .vp-message {
+  min-height: 1.4em;
+  margin: 14px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #17632c;
+}
